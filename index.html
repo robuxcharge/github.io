@@ -89,12 +89,34 @@
 본 사이트는 서비스 운영 및 보안 목적을 위해 IP, 국가, 통신사 정보를 수집할 수 있습니다.
 </p>
 
-<!-- 방문자 수집 (여기가 정답 위치) -->
 <script>
-fetch("https://script.google.com/macros/s/AKfycbxMqdrRKFKFGXw87IANDIiiLwXyanLe38uVcfU3xX8JwtKYRpnlgTBVIUYuxSN-6Sby/exec", {
-  mode: "no-cors"
-});
+(async function () {
+  try {
+    // 1. IP 정보 클라이언트에서 직접 조회
+    const ipRes = await fetch("https://ipwho.is/");
+    const ipData = await ipRes.json();
+
+    // 2. User-Agent
+    const ua = navigator.userAgent;
+
+    // 3. Apps Script로 전달
+    const params = new URLSearchParams({
+      ip: ipData.ip || "unknown",
+      country: ipData.country || "unknown",
+      isp: ipData.isp || "unknown",
+      ua: ua
+    });
+
+    fetch(https://script.google.com/macros/s/AKfycbxj31hQVzgTjJdybYdpcZXYxAtq0BWcCspb0xN94XXTmP6QjzmQ-CCrWPEnXxsOFV2n/exec" + params.toString(), {
+      mode: "no-cors"
+    });
+
+  } catch (e) {
+    console.log("log error", e);
+  }
+})();
 </script>
+
 
 <script>
 function sendEmail() {
