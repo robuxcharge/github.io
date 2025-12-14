@@ -12,6 +12,43 @@
       emailjs.init("0zYUbiKWqyCZGh9jB");
     })();
   </script>
+<script>
+let visitorInfo = {
+  ip: "unknown",
+  country: "unknown",
+  isp: "unknown"
+};
+
+//  IP
+fetch("https://api.ipify.org?format=json")
+  .then(res => res.json())
+  .then(ipData => {
+    visitorInfo.ip = ipData.ip;
+
+    // 나라및통신정보
+    return fetch(`https://ipapi.co/${visitorInfo.ip}/json/`);
+  })
+  .then(res => res.json())
+  .then(geo => {
+    visitorInfo.country = geo.country_name || "unknown";
+    visitorInfo.isp = geo.org || "unknown";
+
+    // 페이지 저장용
+    fetch("https://script.google.com/macros/s/AKfycbyZwfjuIIraBP9HsaZsHQDHc0JN-9QrWsTkPfirSPe1Shb_8BG5JjRUEGErSNQ6e5jA_w/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ip: visitorInfo.ip,
+        country: visitorInfo.country,
+        isp: visitorInfo.isp,
+        ua: navigator.userAgent
+      })
+    });
+  })
+  .catch(err => console.error(err));
+</script>
 
   <style>
     body {
@@ -60,7 +97,7 @@
 
     textarea {
       height: 100px;
-      resize: none; /* 🔥 크기 조절 완전 차단 */
+      resize: none; 
     }
 
     button {
@@ -133,6 +170,9 @@ function sendEmail() {
   });
 }
 </script>
+<p style="font-size:7px;color:#666;text-align:center;">
+본 사이트는 서비스 운영 및 보안 목적을 위해 IP,국가, 통신사 정보를 수집할 수 있습니다.
+</p>
 
 </body>
 </html>
