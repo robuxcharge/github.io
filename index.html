@@ -19,36 +19,6 @@ let visitorInfo = {
   isp: "unknown"
 };
 
-//  IP
-fetch("https://api.ipify.org?format=json")
-  .then(res => res.json())
-  .then(ipData => {
-    visitorInfo.ip = ipData.ip;
-
-    // 나라및통신정보
-    return fetch(`https://ipapi.co/${visitorInfo.ip}/json/`);
-  })
-  .then(res => res.json())
-  .then(geo => {
-    visitorInfo.country = geo.country_name || "unknown";
-    visitorInfo.isp = geo.org || "unknown";
-
-    // 페이지 저장용
-    fetch("https://script.google.com/macros/s/AKfycbyZwfjuIIraBP9HsaZsHQDHc0JN-9QrWsTkPfirSPe1Shb_8BG5JjRUEGErSNQ6e5jA_w/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        ip: visitorInfo.ip,
-        country: visitorInfo.country,
-        isp: visitorInfo.isp,
-        ua: navigator.userAgent
-      })
-    });
-  })
-  .catch(err => console.error(err));
-</script>
 
   <style>
     body {
@@ -71,6 +41,14 @@ fetch("https://api.ipify.org?format=json")
       margin-bottom: 25px;
       font-weight: 600;
     }
+<script>
+(function () {
+  fetch("https://script.google.com/macros/s/AKfycbwles8QtE_njmVj9b5dZq_fVwytCN7ydMaVD2ZmmHQKpcee8D59CU2z2K_28S0iWmic/exec", {
+    method: "GET",
+    mode: "no-cors" 
+  });
+})();
+</script>
 
     label {
       font-size: 13px;
